@@ -3,10 +3,11 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const User = require('../Modal/user_table');
-const authMiddleware = require("../middleware/authMiddleware");
+const authMiddleware = require('../middleware/authMiddleware');
+const { uploadToS3, deleteObjectFromS3 } = require('../middleware/s3');
+const { JWT_SECRET, BUCKET_NAME } = require('../constants/constants');
 
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET;
 
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -38,7 +39,9 @@ router.post('/user_data', authMiddleware, async (req, res) => {
     }
     res.json({ documents: user.documents });
   } catch (error) {
-    res.status(500).json({ message: 'Server Internal error' });
+    res
+      .status(500)
+      .json({ message: 'Server Internal error', reason: error.message });
   }
 });
 // Login API
@@ -65,7 +68,9 @@ router.post('/login', async (req, res) => {
     });
     res.json({ token, userEmail: user.userEmail });
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error.' });
+    res
+      .status(500)
+      .json({ message: 'Internal server error.', reason: error.message });
   }
 });
 // Registration API
@@ -96,7 +101,9 @@ router.post('/register', async (req, res) => {
     await newUser.save();
     res.status(200).json({ message: 'User Registered Successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error.' });
+    res
+      .status(500)
+      .json({ message: 'Internal server error.', reason: error.message });
   }
 });
 // Uploading Document API
@@ -147,7 +154,7 @@ router.post(
 
       const uniqueFilename = `${Date.now()}-${documentFile.originalname}`;
       const documentLink = `uploads/${uniqueFilename}`;
-
+      await uploadToS3(BUCKET_NAME, documentLink, documentFile.buffer);
       const newDocument = {
         documentType,
         documentName,
@@ -160,7 +167,10 @@ router.post(
 
       res.json({ message: 'Document uploaded successfully.' });
     } catch (error) {
-      res.status(500).json({ message: 'Internal server error.' });
+      console.log(error);
+      res
+        .status(500)
+        .json({ message: 'Internal server error.', reason: error.message });
     }
   }
 );
@@ -169,11 +179,9 @@ router.post('/delete_document', authMiddleware, async (req, res) => {
   const { userEmail, documentName } = req.body;
   try {
     if (!userEmail || !documentName) {
-      return res
-        .status(402)
-        .json({
-          message: 'All fields are required (userEmail, documentName).',
-        });
+      return res.status(402).json({
+        message: 'All fields are required (userEmail, documentName).',
+      });
     }
 
     const user = await User.findOne({ userEmail });
@@ -190,15 +198,22 @@ router.post('/delete_document', authMiddleware, async (req, res) => {
       return res.status(402).json({ message: 'Document not found.' });
     }
 
+    const documentToDelete = user.documents.find(
+      (doc) => doc.documentName === documentName
+    );
+    const documentLink = documentToDelete?.documentLink;
+    await deleteObjectFromS3(BUCKET_NAME, documentLink);
     user.documents = updatedDocuments;
-
     await user.save();
 
     res.json({ message: 'Document deleted successfully.' });
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error.' });
+    res
+      .status(500)
+      .json({ message: 'Internal server error.', reason: error.message });
   }
 });
+
 // Updating Document API
 router.post('/update_document', authMiddleware, async (req, res) => {
   const { userEmail, documentName, documentType, documentDescription } =
@@ -233,7 +248,9 @@ router.post('/update_document', authMiddleware, async (req, res) => {
 
     res.json({ message: 'Document updated successfully.' });
   } catch (error) {
-    res.status(500).json({ message: 'Internal server error.' });
+    res
+      .status(500)
+      .json({ message: 'Internal server error.', reason: error.message });
   }
 });
 

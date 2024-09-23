@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const DB = process.env.DB;
+const { DB } = require('../constants/constants');
 mongoose.connect(DB);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));

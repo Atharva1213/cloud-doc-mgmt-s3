@@ -43,6 +43,18 @@ const Artifacts = ({ userData, userEmail, setUserData, fetchUserData }) => {
     }, 500);
   };
 
+  const handleShare = (documentLink) => {
+    const fullLink = `https://d1i3jk8v3nrjwc.cloudfront.net/${documentLink}`;
+    
+    navigator.clipboard.writeText(fullLink)
+        .then(() => {
+            alert('Link copied to clipboard!');
+        })
+        .catch((err) => {
+            console.error('Failed to copy: ', err);
+        });
+};
+
   return (
     <div>
       {editSection && (
@@ -121,7 +133,7 @@ const Artifacts = ({ userData, userEmail, setUserData, fetchUserData }) => {
                         <div className="tooltip">
                           <a
                             className="view-link"
-                            href={document.documentLink}
+                            href={`https://d1i3jk8v3nrjwc.cloudfront.net/${document.documentLink}`}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -147,7 +159,7 @@ const Artifacts = ({ userData, userEmail, setUserData, fetchUserData }) => {
                       <td className="table-cell">
                         <div className="tooltip">
                           <button className="share-button">
-                            <span className="material-symbols-outlined">
+                            <span className="material-symbols-outlined"  onClick={() => handleShare(document.documentLink)} >
                               share
                             </span>
                           </button>
