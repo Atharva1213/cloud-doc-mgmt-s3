@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const User = require('../Modal/user_table');
+const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -12,27 +13,10 @@ const upload = multer({
   storage: storage,
 });
 
-// Authentication Middleware
-function authMiddleware(req, res, next) {
-  const token = req.headers['authorization'];
-  if (!token) {
-    return res.status(401).json({ message: 'No token Provided' });
-  }
-
-  jwt.verify(token, JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ message: 'Unauthorized  User' });
-    }
-    req.userEmail = decoded.userEmail;
-    next();
-  });
-}
-
 // Protected Route API
 router.get('/verify', authMiddleware, (req, res) => {
   res.json({ message: 'This is a protected route', userEmail: req.userEmail });
 });
-
 // Login Check Route API
 router.get('/user_login', authMiddleware, (req, res) => {
   res.json({ message: 'This is a protected route', userEmail: req.userEmail });
@@ -57,7 +41,6 @@ router.post('/user_data', authMiddleware, async (req, res) => {
     res.status(500).json({ message: 'Server Internal error' });
   }
 });
-
 // Login API
 router.post('/login', async (req, res) => {
   const { userEmail, userPassword } = req.body;
@@ -85,7 +68,6 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Internal server error.' });
   }
 });
-
 // Registration API
 router.post('/register', async (req, res) => {
   const { userEmail, userPassword } = req.body;
@@ -117,7 +99,6 @@ router.post('/register', async (req, res) => {
     res.status(500).json({ message: 'Internal server error.' });
   }
 });
-
 // Uploading Document API
 router.post(
   '/upload_document',
@@ -183,7 +164,6 @@ router.post(
     }
   }
 );
-
 // Delete Document API
 router.post('/delete_document', authMiddleware, async (req, res) => {
   const { userEmail, documentName } = req.body;
@@ -219,7 +199,6 @@ router.post('/delete_document', authMiddleware, async (req, res) => {
     res.status(500).json({ message: 'Internal server error.' });
   }
 });
-
 // Updating Document API
 router.post('/update_document', authMiddleware, async (req, res) => {
   const { userEmail, documentName, documentType, documentDescription } =
