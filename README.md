@@ -36,7 +36,7 @@ Before running the project, make sure you have the following:
 git clone https://github.com/your-username/cloud-doc-mgmt-s3.git
 cd cloud-doc-mgmt-s3
 ```
-First Copy SampleEnvFrontend And Replace With Original Value
+First Copy .env.sample And Replace With Original Value
 #### Frontend (Client-Side):
 ```bash
 cd cloud-doc-mgmt-client
@@ -44,7 +44,7 @@ npm install
 npm run dev
 ```
 
-First Copy SampleEnvBackend And Replace With Original Value
+First Copy .env.sample And Replace With Original Value
 #### 2. Backend Setup
 
 Navigate to the backend directory:
