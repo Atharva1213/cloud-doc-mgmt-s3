@@ -44,3 +44,14 @@ how to see  the log pm2
 pm2 logs
 allow check the public ip address berfore starting the instance through cmd 
 
+
+how to add the ssh key of my computer to github account 
+
+step1 
+getentate ssh key for my pc 
+Asus/.ssh/ location that file .pub
+
+ssh-keygen -t ed25519 -C "your_email@example.com"
+cat ~/.ssh/id_ed25519.pub 
+add to setting/ssh/key/  -- github
+
