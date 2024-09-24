@@ -15,6 +15,9 @@ const authRouter = require('./routes/auth');
 
 app.use('/auth', authRouter);
 
+app.get("/",(req,res)=>{
+  res.json({message:"Server Set Up Succesfully (Health Check)",req}); 
+});
 app.listen(PORT, () => {
   console.log(`Server Listening on ${process.env.PORT}`);
 });
