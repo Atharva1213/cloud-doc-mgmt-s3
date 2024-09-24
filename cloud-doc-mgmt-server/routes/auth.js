@@ -18,16 +18,18 @@ const upload = multer({
 router.get('/verify', authMiddleware, (req, res) => {
   res.json({ message: 'This is a protected route', userEmail: req.userEmail });
 });
+
 // Login Check Route API
 router.get('/user_login', authMiddleware, (req, res) => {
   res.json({ message: 'This is a protected route', userEmail: req.userEmail });
 });
+
 // get_user_data API
 router.post('/user_data', authMiddleware, async (req, res) => {
   const { userEmail } = req.body;
   try {
     if (!userEmail) {
-      return res.status(402).json({ message: 'Username is Required.' });
+      return res.status(402).json({ message: 'UserEmail is Required.' });
     }
     const user = await User.findOne({ userEmail }).sort({
       'documents.uploadDate': -1,
@@ -44,6 +46,7 @@ router.post('/user_data', authMiddleware, async (req, res) => {
       .json({ message: 'Server Internal error', reason: error.message });
   }
 });
+
 // Login API
 router.post('/login', async (req, res) => {
   const { userEmail, userPassword } = req.body;
@@ -55,7 +58,9 @@ router.post('/login', async (req, res) => {
     }
     const user = await User.findOne({ userEmail: userEmail.toLowerCase() });
     if (!user) {
-      return res.status(402).json({ message: 'Invalid login details!' });
+      return res
+        .status(402)
+        .json({ message: 'User Is Not Register..Plz Register!' });
     }
 
     const isMatch = await bcrypt.compare(userPassword, user.userPassword);
@@ -73,6 +78,7 @@ router.post('/login', async (req, res) => {
       .json({ message: 'Internal server error.', reason: error.message });
   }
 });
+
 // Registration API
 router.post('/register', async (req, res) => {
   const { userEmail, userPassword } = req.body;
@@ -88,7 +94,9 @@ router.post('/register', async (req, res) => {
       userEmail: userEmail.toLowerCase(),
     });
     if (existingUser) {
-      return res.status(402).json({ message: 'User already exists' });
+      return res
+        .status(402)
+        .json({ message: 'User already exists Plz Go Login' });
     }
 
     const hashedPassword = await bcrypt.hash(userPassword, 10);
@@ -106,6 +114,7 @@ router.post('/register', async (req, res) => {
       .json({ message: 'Internal server error.', reason: error.message });
   }
 });
+
 // Uploading Document API
 router.post(
   '/upload_document',
@@ -167,7 +176,6 @@ router.post(
 
       res.json({ message: 'Document uploaded successfully.' });
     } catch (error) {
-      console.log(error);
       res
         .status(500)
         .json({ message: 'Internal server error.', reason: error.message });
@@ -187,7 +195,9 @@ router.post('/delete_document', authMiddleware, async (req, res) => {
     const user = await User.findOne({ userEmail });
 
     if (!user) {
-      return res.status(401).json({ message: 'User not found.' });
+      return res
+        .status(401)
+        .json({ message: 'User not registered. Please register.' });
     }
 
     const updatedDocuments = user.documents.filter(
@@ -195,7 +205,7 @@ router.post('/delete_document', authMiddleware, async (req, res) => {
     );
 
     if (user.documents.length === updatedDocuments.length) {
-      return res.status(402).json({ message: 'Document not found.' });
+      return res.status(402).json({ message: 'Document Is Not Present.' });
     }
 
     const documentToDelete = user.documents.find(
@@ -230,7 +240,9 @@ router.post('/update_document', authMiddleware, async (req, res) => {
     const user = await User.findOne({ userEmail });
 
     if (!user) {
-      return res.status(401).json({ message: 'User not found.' });
+      return res
+        .status(401)
+        .json({ message: 'User not registered. Please register.' });
     }
 
     const documentToUpdate = user.documents.find(
@@ -238,7 +250,7 @@ router.post('/update_document', authMiddleware, async (req, res) => {
     );
 
     if (!documentToUpdate) {
-      return res.status(402).json({ message: 'Document not found.' });
+      return res.status(402).json({ message: 'Document Is Not Present.' });
     }
 
     documentToUpdate.documentType = documentType;

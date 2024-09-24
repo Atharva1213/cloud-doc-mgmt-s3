@@ -32,25 +32,26 @@ Before running the project, make sure you have the following:
 ## Project Setup
 
 ### 1. Clone the Repositories
-
-#### Backend (Server-Side):
 ```bash
 git clone https://github.com/your-username/cloud-doc-mgmt-s3.git
-cd cloud-doc-mgmt-s3-server 
+cd cloud-doc-mgmt-s3
 ```
-
+First Copy SampleEnvFrontend And Replace With Original Value
 #### Frontend (Client-Side):
 ```bash
-git clone https://github.com/your-username/cloud-doc-mgmt-client.git
 cd cloud-doc-mgmt-client
+npm install 
+npm run dev
 ```
 
+First Copy SampleEnvBackend And Replace With Original Value
 #### 2. Backend Setup
 
 Navigate to the backend directory:
-
 ```bash
 cd cloud-doc-mgmt-s3-server
+npm install
+nodemon app.js 
 ```
 
 Install the dependencies:
