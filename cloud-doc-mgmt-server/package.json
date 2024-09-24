@@ -1,13 +1,14 @@
 {
   "name": "cloud-doc-mgmt-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Handling Backend Logic of CloudDocs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "dev":"nodemon app.js"
   },
-  "author": "",
+  "author": "Atharva Lende",
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.654.0",
