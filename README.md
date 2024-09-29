@@ -126,18 +126,18 @@ Once both frontend and backend servers are running:
 
 ## API Endpoints
 
-### Upload File
-- **URL:** `/api/upload`
+### Health Check
+- **URL:** `/`
+- **Method:** GET`
+- **Description:** Server Health Check.
+
+### login check
+- **URL:** `/auth/login`
 - **Method:** `POST`
-- **Description:** Uploads a file to the S3 bucket.
+- **Description:** LOGIN check prirptse.
 
-### List Files
-- **URL:** `/api/files`
-- **Method:** `GET`
-- **Description:** Retrieves a list of all files in the S3 bucket.
-
-### Download File
-- **URL:** `/api/files/:filename`
+### register to portabel
+- **URL:** `/api/fil`
 - **Method:** `GET`
 - **Description:** Downloads a specific file from the S3 bucket.
 

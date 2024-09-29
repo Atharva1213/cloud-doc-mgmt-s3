@@ -45,7 +45,7 @@ const Artifacts = ({ userData, userEmail, setUserData, fetchUserData }) => {
 
   const handleShare = (documentLink) => {
     const fullLink = `https://d1i3jk8v3nrjwc.cloudfront.net/${documentLink}`;
-    
+ 
     navigator.clipboard.writeText(fullLink)
         .then(() => {
             alert('Link copied to clipboard!');

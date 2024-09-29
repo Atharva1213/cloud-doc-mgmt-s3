@@ -134,7 +134,7 @@ export const handleDocumentSubmit = async (
   clearData
 ) => {
   e.preventDefault();
-  setLoading(false);
+  setLoading(true);
 
   if (!file) {
     setLoading(false);
