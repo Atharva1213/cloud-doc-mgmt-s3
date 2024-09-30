@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import usePagination from '../../hooks/usePaginations';
 import EditArtifactData from '../EditArtifactData/editArtifactData';
@@ -40,19 +40,17 @@ const Artifacts = ({ userData, userEmail, setUserData, fetchUserData }) => {
     setArtifactsSection(true);
     setTimeout(() => {
       window.location.reload();
-    }, 500);
+    },200);
   };
 
-  const handleShare = (documentLink) => {
+  const handleShare = (documentLink) => {  
     const fullLink = `https://d1i3jk8v3nrjwc.cloudfront.net/${documentLink}`;
- 
-    navigator.clipboard.writeText(fullLink)
-        .then(() => {
-            alert('Link copied to clipboard!');
-        })
-        .catch((err) => {
-            console.error('Failed to copy: ', err);
-        });
+    const textarea = document.createElement("textarea");
+    textarea.value = fullLink;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    toast.success("Link copied to clipboard!")
 };
 
   return (

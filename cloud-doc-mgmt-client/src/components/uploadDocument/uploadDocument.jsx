@@ -20,9 +20,7 @@ const UploadDocument = ({ userEmail }) => {
     setname('');
     setDocType('');
     setDescription('');
-    setTimeout(() => {
-      window.location.reload();
-    },300);
+    window.location.reload();
   };
   return (
     <div className="upload-document-container">

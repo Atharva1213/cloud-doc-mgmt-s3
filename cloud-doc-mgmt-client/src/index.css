@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
-/** global css **/
+/** GLOBAL CSS **/
 * {
   margin: 0;
   padding: 0;
@@ -28,7 +28,7 @@ code {
     monospace;
 }
 
-/*global css end */
+/*GLOBAL CSS END */
 
 /* LOGIN  */
 .login-container {
@@ -117,7 +117,6 @@ code {
 
 .welcome-title {
   margin-bottom: 20px;
-  /* font-size: 24px; */
   font-weight: bold;
 }
 
@@ -147,6 +146,8 @@ code {
 }
 
 /* LOGIN END  */
+
+
 
 /* DASHBOARD */
 
@@ -254,9 +255,6 @@ code {
 }
 
 .artifacts-header {
-  /* display: flex;
-    justify-content: space-between;
-    align-items: center; */
   margin-bottom: 20px;
 }
 
@@ -302,7 +300,6 @@ code {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: left;
-  /* border-bottom: 1px solid #ddd; */
 }
 
 .artifacts-table th {
@@ -382,7 +379,6 @@ code {
 }
 
 .artifacts-container .select-entries select {
-  /* width: 25%; */
   padding: 5px;
   margin: 0px 6px 0px 6px;
   border: 1px solid #ccc;

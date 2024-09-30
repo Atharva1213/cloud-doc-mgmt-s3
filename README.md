@@ -36,7 +36,12 @@ Before running the project, make sure you have the following:
 git clone https://github.com/your-username/cloud-doc-mgmt-s3.git
 cd cloud-doc-mgmt-s3
 ```
-First Copy .env.sample And Replace With Original Value
+Create a .env file in the root of the Frontend folder and add the following environment variables:
+env
+```bash
+  REACT_APP_API_URL = http://localhost:{BACKEND_PORT}
+```
+
 #### Frontend (Client-Side):
 ```bash
 cd cloud-doc-mgmt-client
@@ -44,67 +49,33 @@ npm install
 npm run dev
 ```
 
-First Copy .env.sample And Replace With Original Value
 #### 2. Backend Setup
 
-Navigate to the backend directory:
-```bash
-cd cloud-doc-mgmt-s3-server
-npm install
-nodemon app.js 
-```
-
-Install the dependencies:
-
-```bash
-npm install
-```
-
 Create a .env file in the root of the backend folder and add the following environment variables:
-
 env
 ```bash
 AWS_ACCESS_KEY_ID=your_aws_access_key
 AWS_SECRET_ACCESS_KEY=your_aws_secret_key
 AWS_REGION=your_aws_region
 S3_BUCKET_NAME=your_s3_bucket_name
+PORT=your_backend_port
+DB=mongodb_url_altas
+JWT_SECRET=secret_key
 ```
 
-Start the backend server:
-
+Navigate to the backend directory:
 ```bash
-npm start
+cd cloud-doc-mgmt-s3-server
+npm install 
+npm run dev
 ```
 
-By default, the backend will run on http://localhost:5000.
+### RUN THE PROJECT THORUGH DOCKER-DESKTOP FILE 
 
-#### 3. Frontend Setup 
-
-Navigate to the frontend directory:
-
-```bash
-cd cloud-doc-mgmt-client
+```bash 
+   cd Dev 
+   docker-compose up 
 ```
-
-Install the dependencies:
-
-```bash
-npm install
-```
-
-Set up the environment file (.env) in the frontend directory and configure it with the backend URL:
-
-env
-```bash
-REACT_APP_BACKEND_URL=http://localhost:5000
-```
-
-Start the frontend app:
-
-```bash
-npm start
-```
-The app will run on http://localhost:3000.
 
 ## Usage
 
@@ -124,30 +95,19 @@ Once both frontend and backend servers are running:
 1. Create an IAM user with `AmazonS3FullAccess` permission (or restrict permissions to the specific bucket).
 2. Obtain the **Access Key ID** and **Secret Access Key** for use in the `.env` file.
 
-## API Endpoints
-
-### Health Check
-- **URL:** `/`
-- **Method:** GET`
-- **Description:** Server Health Check.
-
-### login check
-- **URL:** `/auth/login`
-- **Method:** `POST`
-- **Description:** LOGIN check prirptse.
-
-### register to portabel
-- **URL:** `/api/fil`
-- **Method:** `GET`
-- **Description:** Downloads a specific file from the S3 bucket.
-
-### Delete File
-- **URL:** `/api/files/:filename`
-- **Method:** `DELETE`
-- **Description:** Deletes a specific file from the S3 bucket.
-
 ## Additional Notes
 
 - **Security:** Ensure your AWS credentials and bucket policies are properly set to secure access.
 - **Error Handling:** Implement error handling for operations like failed uploads or invalid file formats.
 - **Scaling:** This project can be scaled by adding user authentication, using AWS IAM roles, and integrating more AWS services like DynamoDB for metadata storage.
+
+### PROJECT SCREENSHOT
+
+## Login Page 
+![alt text](image.png)
+## Register Page 
+![alt text](image-1.png)
+## Dashboard Page 
+![alt text](image-2.png)
+## Upload Document Page 
+![alt text](image-3.png)

@@ -211,7 +211,7 @@ export const handleDocumentDelete = async (
     ShowSuccessMessage(response.data.message);
     setTimeout(() => {
       handleClose();
-    }, 1500);
+    },1000);
   } catch (error) {
     ShowErrorMessage(error);
   } finally {
