@@ -3,7 +3,6 @@ exports.BUCKET_NAME = process.env.BUCKET_NAME;
 exports.AWS_REGION = process.env.AWS_REGION;
 exports.AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
 exports.AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
-exports.DB = process.env.DB;
 exports.JWT_SECRET = process.env.JWT_SECRET;
 exports.CLIENTPARAMS = {
   region: process.env.AWS_REGION,
@@ -12,3 +11,12 @@ exports.CLIENTPARAMS = {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 };
+
+exports.NODE_ENV = process.env.NODE_ENV;
+exports.CLUSTERURLS = [
+  process.env.PRODDB1,
+  process.env.PRODDB2,
+  process.env.PRODDB3,
+];
+
+exports.TESTDB1 = process.env.TESTDB1;

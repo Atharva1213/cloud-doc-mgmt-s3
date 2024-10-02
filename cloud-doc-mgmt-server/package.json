@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write .",
-    "dev":"nodemon app.js"
+    "dev": "cross-env NODE_ENV=development nodemon --watch .env --watch . --ext js --exec node app.js",
+    "prod": "cross-env NODE_ENV=production nodemon --watch .env --watch . --ext js --exec node app.js"
   },
   "author": "Atharva Lende",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "@aws-sdk/client-s3": "^3.654.0",
     "@aws-sdk/s3-request-presigner": "^3.654.0",
     "bcryptjs": "^2.4.3",
+    "chalk": "^4.1.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
@@ -23,5 +25,8 @@
     "multer": "^1.4.5-lts.1",
     "nodemon": "^3.1.7",
     "prettier": "^3.3.3"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

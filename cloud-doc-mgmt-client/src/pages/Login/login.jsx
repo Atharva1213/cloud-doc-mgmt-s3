@@ -13,6 +13,16 @@ const Login = () => {
     userPassword: '',
     confirmPassword: '',
   });
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+  const [ConfirmpasswordVisible, setConfirmPasswordVisible] = useState(false);
+
+  const toggleConfirmPasswordVisibility = () => {
+    setConfirmPasswordVisible(!ConfirmpasswordVisible);
+  };
   const [spinner, setSpinner] = useState('invisible');
   const handleLoginChange = (e) => {
     const { value, name } = e.target;
@@ -27,7 +37,7 @@ const Login = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const loginStatus = await loginUserCheck();
+      const loginStatus = await loginUserCheck(); 
       if (loginStatus) window.location.href = '/dashboard';
     };
     fetchData();
@@ -39,12 +49,25 @@ const Login = () => {
         toast.error('Passwords do not match.');
         return;
       }
-      handleRegisterSubmit(e, userLoginData, setUserLoginData, setSpinner);
+      handleRegisterSubmit(
+        e,
+        userLoginData,
+        setUserLoginData,
+        setSpinner,
+        setLoginStatusCheck
+      );
     } else {
       handleLoginSubmit(e, userLoginData, setUserLoginData, setSpinner);
     }
   };
 
+  useEffect(() => {
+    setUserLoginData({
+      userEmail: '',
+      userPassword: '',
+      confirmPassword: '',
+    });
+  }, [loginStatusCheck]);
   return (
     <div className="login-container">
       <ToastContainer />
@@ -66,34 +89,67 @@ const Login = () => {
               onChange={handleLoginChange}
               required
             />
-            <input
-              name="userPassword"
-              type="password"
-              value={userLoginData.userPassword}
-              placeholder="Enter Password"
-              onChange={handleLoginChange}
-              required
-            />
 
-            {loginStatusCheck && (
+            <div style={{ width: '100%', position: 'relative' }}>
               <input
-                name="confirmPassword"
-                type="password"
-                value={userLoginData.confirmPassword}
-                placeholder="Enter Confirm Password"
-                onChange={handleLoginChange}
+                name="userPassword"
+                type={passwordVisible ? 'text' : 'password'}
+                placeholder="Enter Password"
                 required
+                style={{ width: '100%' }}
+                value={userLoginData.userPassword}
+                onChange={handleLoginChange}
               />
+              <span
+                className="material-icons"
+                onClick={togglePasswordVisibility}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 0,
+                  paddingTop: '0.7vh',
+                  paddingRight: '0.8vh',
+                }}
+              >
+                {passwordVisible ? 'visibility' : 'visibility_off'}
+              </span>
+            </div>
+            {loginStatusCheck && (
+              <div style={{ width: '100%', position: 'relative' }}>
+                <input
+                  name="confirmPassword"
+                  type={ConfirmpasswordVisible ? 'text' : 'password'}
+                  value={userLoginData.confirmPassword}
+                  placeholder="Enter Confirm Password"
+                  onChange={handleLoginChange}
+                  required
+                  style={{ width: '100%' }}
+                />
+                <span
+                  className="material-icons"
+                  onClick={toggleConfirmPasswordVisibility}
+                  style={{
+                    position: 'absolute',
+                    top: 0,
+                    right: 0,
+                    paddingTop: '0.7vh',
+                    paddingRight: '0.8vh',
+                  }}
+                >
+                  {ConfirmpasswordVisible ? 'visibility' : 'visibility_off'}
+                </span>
+              </div>
             )}
+
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <a
+              <span
                 onClick={() => {
                   setLoginStatusCheck(!loginStatusCheck);
                 }}
                 className="forgot-password"
               >
                 {!loginStatusCheck ? 'New Register' : 'Login'}
-              </a>
+              </span>
             </div>
             {spinner === 'invisible' && (
               <button

@@ -12,7 +12,8 @@ export const handleRegisterSubmit = async (
   e,
   userLoginData,
   setUserLoginData,
-  setSpinner
+  setSpinner,
+  setLoginStatusCheck
 ) => {
   e.preventDefault();
   setSpinner('block');
@@ -21,7 +22,8 @@ export const handleRegisterSubmit = async (
       `${API_URL}/auth/register`,
       userLoginData
     );
-    ShowSuccessMessage(response.data.message);
+    ShowSuccessMessage(response.data.message); 
+    setLoginStatusCheck(false);
   } catch (error) {
     ShowErrorMessage(error);
   } finally {
@@ -83,6 +85,7 @@ export const verifyUser = async (setAuth, setUserEmail) => {
     setAuth(true);
     setUserEmail(res.data.userEmail);
   } catch (error) {
+    console.log(error);
     ShowErrorMessage(error);
   }
 };

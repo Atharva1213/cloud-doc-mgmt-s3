@@ -5,7 +5,11 @@ const multer = require('multer');
 const User = require('../Modal/user_table');
 const authMiddleware = require('../middleware/authMiddleware');
 const { uploadToS3, deleteObjectFromS3 } = require('../middleware/s3');
-const { JWT_SECRET, BUCKET_NAME } = require('../constants/constants');
+const {
+  insertDocumentIntoClusters,
+  UpdateDocumentIntoClusters,
+} = require('../db/query');
+const { JWT_SECRET, BUCKET_NAME, NODE_ENV } = require('../constants/constants');
 
 const router = express.Router();
 
@@ -106,7 +110,13 @@ router.post('/register', async (req, res) => {
       userPassword: hashedPassword,
     });
 
-    await newUser.save();
+    if (NODE_ENV === 'development') await newUser.save();
+    else
+      await insertDocumentIntoClusters({
+        userEmail: userEmail.toLowerCase(),
+        userPassword: hashedPassword,
+      });
+
     res.status(200).json({ message: 'User Registered Successfully' });
   } catch (error) {
     res
@@ -172,7 +182,9 @@ router.post(
         uploadDate: Date.now(),
       };
       user.documents.push(newDocument);
-      await user.save();
+
+      if (NODE_ENV === 'development') await user.save();
+      else await UpdateDocumentIntoClusters(user);
 
       res.json({ message: 'Document uploaded successfully.' });
     } catch (error) {
@@ -214,7 +226,9 @@ router.post('/delete_document', authMiddleware, async (req, res) => {
     const documentLink = documentToDelete?.documentLink;
     await deleteObjectFromS3(BUCKET_NAME, documentLink);
     user.documents = updatedDocuments;
-    await user.save();
+
+    if (NODE_ENV === 'development') await user.save();
+    else await UpdateDocumentIntoClusters(user);
 
     res.json({ message: 'Document deleted successfully.' });
   } catch (error) {
@@ -256,7 +270,8 @@ router.post('/update_document', authMiddleware, async (req, res) => {
     documentToUpdate.documentType = documentType;
     documentToUpdate.documentDescription = documentDescription;
 
-    await user.save();
+    if (NODE_ENV === 'development') await user.save();
+    else await UpdateDocumentIntoClusters(user);
 
     res.json({ message: 'Document updated successfully.' });
   } catch (error) {
