@@ -76,7 +76,7 @@ async function syncDataToClusters(liveData) {
     console.log(chalk.red.bold('No data to synchronize.'));
     return;
   }
-
+  
   for (const clusterURI of CLUSTERURLS) {
     try {
       await connectToDatabaseLive(clusterURI);

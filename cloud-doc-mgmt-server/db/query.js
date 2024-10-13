@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const { CLUSTERURLS } = require('../constants/constants');
+const { CLUSTERURL } = require('../constants/constants');
 const chalk = require('chalk');
 const User = require('../Modal/user_table');
 const { connectToDatabaseLive } = require('./database');
 
 async function insertDocumentIntoClusters(userData) {
-  for (const clusterURI of CLUSTERURLS) {
+  for (const clusterURI of CLUSTERURL) {
     let connection;
     try {
       await mongoose.connection.close();
@@ -29,7 +29,7 @@ async function insertDocumentIntoClusters(userData) {
 }
 
 async function UpdateDocumentIntoClusters(userData) {
-  for (const clusterURI of CLUSTERURLS) {
+  for (const clusterURI of CLUSTERURL) {
     let connection;
     try {
       await mongoose.connection.close();

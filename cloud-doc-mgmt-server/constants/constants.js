@@ -19,4 +19,10 @@ exports.CLUSTERURLS = [
   process.env.PRODDB3,
 ];
 
+exports.CLUSTERURL = [
+  process.env.PRODD1,
+  process.env.PRODD2,
+  process.env.PRODD3,
+];
+
 exports.TESTDB1 = process.env.TESTDB1;
