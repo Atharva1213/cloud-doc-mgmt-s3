@@ -243,7 +243,7 @@ code {
   border-radius: 50%;
   border: 4px solid #b45309;
   border-right-color: white;
-  animation: s2 1s infinite linear;
+  animation: spin 1s infinite linear;
   z-index: 1;
 }
 

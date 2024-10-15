@@ -82,14 +82,6 @@ const Artifacts = ({ userData, userEmail, setUserData, fetchUserData }) => {
                 </select>
                 entries
               </th>
-              <th colSpan="4">
-                <div className="table-buttons">
-                  {/* <button onClick={() => exportToCSV(filteredArtifacts, 'DMS My Artifacts.csv')}>CSV</button>
-                                    <button onClick={() => exportToExcel(filteredArtifacts, 'DMS My Artifacts.xlsx')}>Excel</button>
-                                    <button onClick={() => exportToPDF('.artifacts-table', 'DMS My Artifacts.pdf')}>PDF</button>
-                                    <button onClick={() => handlePrint('.artifacts-table-container')}>Print</button> */}
-                </div>
-              </th>
               <th className="user-search">
                 <label>Search</label>
                 <input
