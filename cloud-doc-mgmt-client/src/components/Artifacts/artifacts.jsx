@@ -1,17 +1,16 @@
 import { useState } from 'react';
-import { toast,ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import usePagination from '../../hooks/usePaginations';
 import EditArtifactData from '../EditArtifactData/editArtifactData';
 
 const Artifacts = ({ userData, userEmail, setUserData, fetchUserData }) => {
-  const [artifacts, setArtifacts] = useState(userData);
   const [searchQuery, setSearchQuery] = useState('');
   const [editSection, setEditSection] = useState(false);
   const [artifactsSection, setArtifactsSection] = useState(true);
   const [editFormData, setEditFormData] = useState([]);
 
-  const filteredDocuments = artifacts.filter(
+  const filteredDocuments = userData.filter(
     (document) =>
       document.documentName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       document.documentType.toLowerCase().includes(searchQuery.toLowerCase())
@@ -40,18 +39,18 @@ const Artifacts = ({ userData, userEmail, setUserData, fetchUserData }) => {
     setArtifactsSection(true);
     setTimeout(() => {
       window.location.reload();
-    },200);
+    }, 200);
   };
 
-  const handleShare = (documentLink) => {  
+  const handleShare = (documentLink) => {
     const fullLink = `https://d1i3jk8v3nrjwc.cloudfront.net/${documentLink}`;
-    const textarea = document.createElement("textarea");
+    const textarea = document.createElement('textarea');
     textarea.value = fullLink;
     document.body.appendChild(textarea);
     textarea.select();
-    document.execCommand("copy");
-    toast.success("Link copied to clipboard!")
-};
+    document.execCommand('copy');
+    toast.success('Link copied to clipboard!');
+  };
 
   return (
     <div>
@@ -81,6 +80,14 @@ const Artifacts = ({ userData, userEmail, setUserData, fetchUserData }) => {
                   <option value="100">100</option>
                 </select>
                 entries
+              </th>
+              <th colSpan="4">
+                <div className="table-buttons">
+                  {/* <button onClick={() => exportToCSV(filteredArtifacts, 'DMS My Artifacts.csv')}>CSV</button>
+                                    <button onClick={() => exportToExcel(filteredArtifacts, 'DMS My Artifacts.xlsx')}>Excel</button>
+                                    <button onClick={() => exportToPDF('.artifacts-table', 'DMS My Artifacts.pdf')}>PDF</button>
+                                    <button onClick={() => handlePrint('.artifacts-table-container')}>Print</button> */}
+                </div>
               </th>
               <th className="user-search">
                 <label>Search</label>
@@ -149,7 +156,10 @@ const Artifacts = ({ userData, userEmail, setUserData, fetchUserData }) => {
                       <td className="table-cell">
                         <div className="tooltip">
                           <button className="share-button">
-                            <span className="material-symbols-outlined"  onClick={() => handleShare(document.documentLink)} >
+                            <span
+                              className="material-symbols-outlined"
+                              onClick={() => handleShare(document.documentLink)}
+                            >
                               share
                             </span>
                           </button>

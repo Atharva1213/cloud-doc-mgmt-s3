@@ -104,10 +104,14 @@ Once both frontend and backend servers are running:
 ### PROJECT SCREENSHOT
 
 ## Login Page 
-![alt text](image.png)
+![alt text](./screenShot/image.png)
 ## Register Page 
-![alt text](image-1.png)
+![alt text](./screenShot/image-1.png)
 ## Dashboard Page 
-![alt text](image-2.png)
+![alt text](./screenShot/image-2.png)
 ## Upload Document Page 
-![alt text](image-3.png)
+![alt text](./screenShot/image-3.png)
+
+
+### Video Complete Processing 
+<video controls src="./video/S3DocManager_ Cloud-Based Document Storage - Google Chrome 2024-09-30 20-26-35.mp4" title="Title"></video>
